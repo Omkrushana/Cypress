@@ -3,7 +3,7 @@ describe("Lighthouse Login Page", () => {
     // Visit the login page
     cy.visit("https://es.lighthouse-learning.com/");
   });
-  // 1
+  // ------------------------1------------------------ Login page elements test
   it("should display the login page correctly", () => {
     // Logo
     cy.get(".responsive-img").should("be.visible");
@@ -28,7 +28,8 @@ describe("Lighthouse Login Page", () => {
     cy.contains("Terms").should("be.visible");
     cy.contains("support.argus@lighthouse-learning.com").should("be.visible");
   });
-  // 2
+  // Changes in form according to  User role start
+  // ------------------------2------------------------
   it('should display "Enrollment Number / Phone Number / User ID" for Student', () => {
     // Click on Student button
     cy.get(".role-type-wrapper > :nth-child(1)").click();
@@ -39,7 +40,7 @@ describe("Lighthouse Login Page", () => {
       "Enrollment Number / Phone Number / User ID"
     );
   });
-
+// ------------------------3------------------------
   it('should change to "Email Address / Phone Number / User ID" for Staff', () => {
     // Click on Staff button
     cy.get(".role-type-wrapper > :nth-child(2)").click();
@@ -50,7 +51,7 @@ describe("Lighthouse Login Page", () => {
       "Email Address / Phone Number / User ID"
     );
   });
-
+// ------------------------4------------------------
   it('should change to "Email Address / Phone Number / User ID" for Parent', () => {
     // Click on Parent button
     cy.get(".role-type-wrapper > :nth-child(3)").click();
@@ -61,7 +62,7 @@ describe("Lighthouse Login Page", () => {
       "Email Address / Phone Number / User ID"
     );
   });
-
+// ------------------------5------------------------
   it("should allow typing into the Enrollment Number/User ID field", () => {
     const username = Cypress.env("username");
     cy.get(".role-type-wrapper > :nth-child(1)").should("have.class", "active");
@@ -71,7 +72,7 @@ describe("Lighthouse Login Page", () => {
       username
     );
   });
-
+// ------------------------6------------------------
   it("should allow slow typing into the Enrollment Number/User ID field", () => {
     const username = Cypress.env("username");
 
@@ -83,12 +84,12 @@ describe("Lighthouse Login Page", () => {
       username
     );
   });
-  // 3
+  // ------------------------7------------------------
   it("should allow typing into the password field", () => {
     const password = Cypress.env("password");
     cy.get('input[placeholder="Please enter your password"]').type(password);
   });
-  // 4
+  // ------------------------8------------------------
   it("should allow the user to log in using the provided credentials", () => {
     const username = Cypress.env("username");
     const password = Cypress.env("password");
@@ -102,7 +103,7 @@ describe("Lighthouse Login Page", () => {
     //  verify successful login
     // cy.url().should("include", "/dashboard");
   });
-
+// ------------------------9------------------------
   it("should hide the password field when a valid phone number is entered", () => {
     cy.get(".ant-form-item-control-input-content > .ant-input").type(
       "9611118310"
@@ -111,7 +112,7 @@ describe("Lighthouse Login Page", () => {
     // the password field is hidden
     cy.get("#normal_login_password").should("not.exist");
   });
-
+// ------------------------10------------------------
   it("should display validation errors for empty fields", () => {
     // Click the Proceed Btn
     cy.get("button").contains("Proceed").click();
@@ -129,7 +130,7 @@ describe("Lighthouse Login Page", () => {
       ".form_item_password > .ant-form-item-control > .ant-form-item-explain > div"
     ).should("contain", "Please enter password!");
   });
-
+// ------------------------11------------------------
   it("should display validation error when enrollment number/phone number/user id is empty", () => {
     // Only enter password, leave the enrollment number/user ID field blank
     cy.get("#normal_login_password").type("Password123");
@@ -145,7 +146,7 @@ describe("Lighthouse Login Page", () => {
       "Please enter a valid enrollment number, phone number or user id"
     );
   });
-
+// ------------------------12------------------------
   it("should display validation error when password is empty", () => {
     // Only enter enrollment number/user ID, leave the password field blank
     cy.get('input[placeholder="Please enter any of the above"]').type(
@@ -160,7 +161,7 @@ describe("Lighthouse Login Page", () => {
       ".form_item_password > .ant-form-item-control > .ant-form-item-explain > div"
     ).should("contain", "Please enter password!");
   });
-
+// ------------------------13------------------------
   it("should display validation error for invalid username in OTP login", () => {
     // Click LoginBtn
     cy.get(".ant-btn-block").click();
@@ -169,7 +170,7 @@ describe("Lighthouse Login Page", () => {
     cy.get(".ant-message-custom-content > :nth-child(2)") 
       .should("be.visible");
   });
-
+// ------------------------14------------------------
   it("should allow the user to login using OTP", () => {
     const username = Cypress.env("username");
     cy.get('input[placeholder="Please enter any of the above"]').type(username);
@@ -180,7 +181,7 @@ describe("Lighthouse Login Page", () => {
     // Assertions  
     // cy.url().should("include", "/otp-login"); //need proper username to test otp sent successfully 
   });
-
+// ------------------------15------------------------
   it("should redirect to the Forgot Password page when clicked", () => {
     cy.contains("Forgot Password?").click();
     cy.url().should("include", "/forget-password");
